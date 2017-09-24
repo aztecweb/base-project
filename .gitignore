@@ -1,0 +1,8 @@
+# Project files
+/public/
+.salts
+/database/
+
+# Composer
+/vendor/
+/composer.phar

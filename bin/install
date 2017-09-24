@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# Install and configure the website in the public directory
+
+WP_CLI='wp --allow-root'
+
+if [ ! -f .env ]; then
+    echo 'Dotenv file not found'
+    exit 1
+fi
+
+# Remove default WordPress packages 
+rm -rf public/wp-content/themes/twenty*
+rm -rf public/wp-content/plugins/{akismet,hello.php}
+rm -rf public/wp-content/languages/{plugins,themes}
+
+# Generate env salts file
+if [ ! -f .salts ]; then
+    $WP_CLI dotenv salts generate --file='.salts'
+fi
+
+cp extra/wp-config.php public/wp-config.php
+
+# Install the WordPress
+$WP_CLI core install

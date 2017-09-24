@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Install website test data
+
+WP_CLI='vendor/bin/wp --allow-root'
+FILE="extra/data/$1.xml"
+
+if [ ! -f "$FILE" ]; then
+    echo 'Data file not found'
+    exit 1
+fi
+
+if ! $WP_CLI plugin is-installed wordpress-importer; then
+    $WP_CLI plugin install wordpress-importer
+fi
+
+$WP_CLI plugin activate wordpress-importer
+
+$WP_CLI import "$FILE" --authors=create
