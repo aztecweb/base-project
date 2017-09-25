@@ -45,10 +45,11 @@ task('deploy', [
 	'deploy:lock',
 	'deploy:release',
 	'deploy:update_code',
-	'deploy:shared',
-	'deploy:writable',
+	'deploy:shared', // execute before installation to share .env file
 	'deploy:vendors',
 	'deploy:install',
+	'deploy:shared', // execute after installation beacause deploy:vendor overwrite the public directory
+	'deploy:writable',
 	'deploy:clear_paths',
 	'deploy:symlink',
 	'deploy:unlock',
