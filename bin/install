@@ -2,7 +2,7 @@
 #
 # Install and configure the website in the public directory
 
-WP_CLI='wp --allow-root'
+WP_CLI='vendor/bin/wp --allow-root'
 
 if [ ! -f .env ]; then
     echo 'Dotenv file not found'
