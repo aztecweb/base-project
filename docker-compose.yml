@@ -10,6 +10,7 @@ services:
       context: ./extra/dockerfile/php
     volumes:
       - .:/app
+      - ./extra/ssh:/root/.ssh
     depends_on:
       - db
 
