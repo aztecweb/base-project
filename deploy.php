@@ -34,7 +34,12 @@ task('reload:php-fpm', function () {
 });
 
 task('deploy:install', function () {
-    run('bin/install');
+    run('cd {{release_path}} && bin/install');
+});
+
+task('pwd', function () {
+    $result = run('pwd');
+    writeln("Current dir: $result");
 });
 
 task('deploy', [

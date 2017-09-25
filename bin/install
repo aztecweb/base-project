@@ -9,6 +9,9 @@ if [ ! -f .env ]; then
     exit 1
 fi
 
+# Copy the config file before start installation
+cp extra/wp-config.php public/wp-config.php
+
 # Remove default WordPress packages 
 rm -rf public/wp-content/themes/twenty*
 rm -rf public/wp-content/plugins/{akismet,hello.php}
@@ -18,8 +21,6 @@ rm -rf public/wp-content/languages/{plugins,themes}
 if [ ! -f .salts ]; then
     $WP_CLI dotenv salts generate --file='.salts'
 fi
-
-cp extra/wp-config.php public/wp-config.php
 
 # Install the WordPress
 $WP_CLI core install
