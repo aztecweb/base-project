@@ -30,7 +30,7 @@ set('writable_dirs', [
 set('ssh_multiplexing', false);
 
 task('reload:php-fpm', function () {
-    run('sudo /usr/sbin/service php7.1-fpm reload');
+    run('sudo /usr/sbin/service php7.0-fpm reload');
 });
 
 task('deploy:install', function () {
