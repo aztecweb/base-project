@@ -1,7 +1,9 @@
 # Project files
+/database/
+/extra/ssh/
 /public/
 .salts
-/database/
+deploy.log
 
 # Composer
 /vendor/

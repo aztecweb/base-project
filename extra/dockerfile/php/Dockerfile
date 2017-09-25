@@ -9,6 +9,9 @@
 # mysqli - WordPress dependency
 FROM php:7.1-alpine
 
+# Install alpine packages
+RUN apk add --update openssh-client 
+
 # Install PHP extensions
 RUN docker-php-ext-install mysqli
 
