@@ -9,8 +9,17 @@ if [ ! -f .env ]; then
     exit 1
 fi
 
+if [ -z ${DEPLOY_STAGE} ]; then
+	DEPLOY_STAGE='development'
+fi
+
+echo "Installing project in ${DEPLOY_STAGE}"
+
 # Copy the config file before start installation
-cp extra/wp-config.php public/wp-config.php
+cp config/wp-config/${DEPLOY_STAGE}.php public/wp-config.php
+
+# Copy wp-cli config file
+cp config/wp-cli/${DEPLOY_STAGE}.yml wp-cli.yml 
 
 # Remove default WordPress packages 
 rm -rf public/wp-content/themes/twenty*

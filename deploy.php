@@ -10,7 +10,10 @@ host('baseproject.aztecweb.net')
 	->stage('production')
 	->user('baseproject')
 	->set('deploy_path', '/home/baseproject')
-	->set('http_user', 'www-data');
+	->set('http_user', 'www-data')
+	->set('env', [
+		'DEPLOY_STAGE', 'production'
+	]);
 
 set('repository', 'git@greatcode.aztecweb.net:aztecwebteam/base-project.git');
 set('branch', 'master');
@@ -40,6 +43,11 @@ task('deploy:install', function () {
 task('pwd', function () {
     $result = run('pwd');
     writeln("Current dir: $result");
+});
+
+task('env', function () {
+    $result = run('printenv');
+    writeln("$result");
 });
 
 task('deploy', [

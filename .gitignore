@@ -4,6 +4,7 @@
 /public/
 .salts
 deploy.log
+wp-cli.yml
 
 # Composer
 /vendor/

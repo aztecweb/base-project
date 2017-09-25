@@ -7,3 +7,4 @@ core install:
   admin_password: admin
   admin_email: admin@admin.com
   skip-email: true
+
