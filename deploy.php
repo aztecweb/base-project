@@ -12,7 +12,7 @@ host('baseproject.aztecweb.net')
 	->set('deploy_path', '/home/baseproject')
 	->set('http_user', 'www-data')
 	->set('env', [
-		'DEPLOY_STAGE', 'production'
+		'DEPLOY_STAGE' => 'production'
 	]);
 
 set('repository', 'git@greatcode.aztecweb.net:aztecwebteam/base-project.git');
@@ -40,14 +40,8 @@ task('deploy:install', function () {
     run('cd {{release_path}} && bin/install');
 });
 
-task('pwd', function () {
-    $result = run('pwd');
-    writeln("Current dir: $result");
-});
-
-task('env', function () {
-    $result = run('printenv');
-    writeln("$result");
+task('deploy:notes', function () {
+    writeln('Reload the PHP-FPM manually in the server');
 });
 
 task('deploy', [
@@ -62,7 +56,7 @@ task('deploy', [
 	'deploy:clear_paths',
 	'deploy:symlink',
 	'deploy:unlock',
-	'reload:php-fpm',	
+	'deploy:notes',
 	'cleanup',
 	'success'
 ]);
