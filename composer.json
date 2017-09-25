@@ -1,5 +1,5 @@
 {
-	"name" : "aztecweb/simple-wp-env",
+	"name" : "aztecweb/base-project",
 	"description" : "A quick way to start a project with WordPress using Docker.",
 	"repositories" : [{
 		"type" : "composer",
