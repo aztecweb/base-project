@@ -2,7 +2,13 @@
 /public/
 .salts
 /database/
+/extra/ssh/
+deploy.log
 
 # Composer
 /vendor/
 /composer.phar
+
+# Node
+bower_components/
+node_modules/

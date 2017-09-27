@@ -24,11 +24,25 @@ If after some seconds, the database could not be connected. Restart the installa
 
 Download PHP packages, including the WordPress.
 
-    docker-compose run --rm composer install
+    $ docker-compose run --rm composer install
 
 Install the WordPress
 
-    docker-compose run --rm php bin/install
+    $ docker-compose run --rm php bin/install
+
+### Theme
+
+Download Node packages
+
+    $ docker-compose run --rm node npm install
+
+Download Bower packages
+
+    $ docker-compose run --rm node bower install
+
+Build the theme
+
+    $ docker-compose run --rm node grunt
 
 ## Import data
 
