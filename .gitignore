@@ -9,3 +9,7 @@ wp-cli.yml
 # Composer
 /vendor/
 /composer.phar
+
+# Node
+bower_components/
+node_modules/

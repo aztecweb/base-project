@@ -20,7 +20,7 @@ services:
     volumes:
       - .:/app
       # Map local user Composer directory with container for cache packages
-      - ~/.composer:/composer
+      - ~/.composer:/root/composer
 
   # Database image to run the mysql
   db:
@@ -47,6 +47,23 @@ services:
     depends_on:
       - db
 
-volumes:
-  database:
-    driver: local
+  # Node 8.2 with Grunt and Bower
+  node:
+    build:
+      context: ./extra/dockerfile/node
+    volumes:
+      - .:/app
+
+  # Watch changes in the project and update the files local server
+  watch:
+    command: grunt watch
+    build:
+      context: ./extra/dockerfile/node
+    ports:
+      - "35729:35729"
+    volumes:
+      - .:/app
+
+# volumes:
+  # database:
+    # driver: local
