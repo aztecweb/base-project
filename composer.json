@@ -25,12 +25,12 @@
 		]
 	},
 	"extra" : {
-		"wordpress-install-dir" : "public",
+		"wordpress-install-dir" : "web",
 		"installer-paths" : {
-			"public/wp-content/plugins/{$name}/" : [
+			"web/wp-content/plugins/{$name}/" : [
 				"type:wordpress-plugin"
 			],
-			"public/wp-content/themes/{$name}/" : [
+			"web/wp-content/themes/{$name}/" : [
 				"type:wordpress-theme"
 			]
 		}

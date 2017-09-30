@@ -13,10 +13,9 @@
  */
 module.exports = function ( grunt ) {
 	grunt.task.registerTask( 'dist', [
-		'copy:config',
-		'sync:theme',
 		'stylus:dist',
+		'bower:copy',
 		'sync:requirejs',
-		'bower:copy'
+		'symlink'
 	] );
 };

@@ -17,7 +17,7 @@ use Aztec\Kernel;
 /**
  * Require the Composer autoload file
  */
-require_once __DIR__ . '/../../../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * The theme container object

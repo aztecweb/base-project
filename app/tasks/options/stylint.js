@@ -2,5 +2,5 @@
  * Lint stylus files
  */
 module.exports = {
-	src: ['theme/stylus/**/*.styl']
+	src: ['<%= config.assets %>/stylus/**/*.styl']
 }

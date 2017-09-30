@@ -3,6 +3,7 @@
 # The packages and extension installed in this image
 #
 # Alpine packages
+# mysql-client   - To WP-CLI access the database
 # openssh-client - To deploy the application
 #
 # PHP extensions
@@ -10,7 +11,7 @@
 FROM php:7.1-alpine
 
 # Install alpine packages
-RUN apk add --update openssh-client 
+RUN apk add --update mysql-client openssh-client 
 
 # Install PHP extensions
 RUN docker-php-ext-install mysqli

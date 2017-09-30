@@ -1,7 +1,8 @@
 # Project files
+/.assets/
+/.ssh/
 /database/
-/extra/ssh/
-/public/
+/web/
 .salts
 deploy.log
 wp-cli.yml
