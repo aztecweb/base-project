@@ -16,4 +16,4 @@ module.exports = {
 			'<%= config.assets.build %>/<%= config.env.ENV %>/css/style.css' : '<%= config.assets.src %>/stylus/style.styl'
 		}
 	}
-}
+};

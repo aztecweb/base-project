@@ -3,4 +3,4 @@
  */
 module.exports = {
 	src: ['<%= config.assets %>/stylus/**/*.styl']
-}
+};
