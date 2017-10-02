@@ -3,7 +3,7 @@
  */
 module.exports = {
 	options: {
-		overwrite: true,
+		overwrite: true
 	},
 	theme: {
 		src: '<%= config.template.src %>',
@@ -20,5 +20,5 @@ module.exports = {
 	wp: {
 		src: '<%= config.config.wp %>',
 		dest: '<%= config.web %>/wp-config.php'
-	},
-}
+	}
+};
