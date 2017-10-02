@@ -1,7 +1,4 @@
 <?php
-
-use Aztec\Kernel;
-
 /**
  * Theme functionalities bootstrap
  *
@@ -11,8 +8,11 @@ use Aztec\Kernel;
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  * @link http://php-di.org/doc/
  *
- * @package WordPress
+ * @package Aztec
  */
+
+use Aztec\Kernel;
+
 
 /**
  * Require the Composer autoload file

@@ -21,6 +21,11 @@ class Kernel {
 	 */
 	protected $container;
 
+	/**
+	 * Initialize the container
+	 *
+	 * @param Container $container The application container.
+	 */
 	public function __construct( Container $container ) {
 		$this->container = $container;
 	}

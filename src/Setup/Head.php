@@ -70,20 +70,20 @@ class Head extends Base {
 	 * Add profile head profile link
 	 */
 	public function profile() {
-	    echo '<link rel="profile" href="http://gmpg.org/xfn/11">' . esc_html( PHP_EOL );
+		echo '<link rel="profile" href="http://gmpg.org/xfn/11">' . esc_html( PHP_EOL );
 	}
 
 	/**
 	 * Add vieport meata tag
 	 */
 	public function viewport() {
-	    echo '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">' . esc_html( PHP_EOL );
+		echo '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">' . esc_html( PHP_EOL );
 	}
 
 	/**
 	 * Define document charset
 	 */
 	public function charset() {
-	    echo sprintf( '<meta charset="%s">', esc_attr( get_bloginfo( 'charset' ) ) ) . esc_html( PHP_EOL );
+		echo sprintf( '<meta charset="%s">', esc_attr( get_bloginfo( 'charset' ) ) ) . esc_html( PHP_EOL );
 	}
 }

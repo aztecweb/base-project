@@ -18,6 +18,9 @@ RUN apk update && apk upgrade && \
 # Install Node global packages
 RUN npm install -g grunt-cli bower
 
+# Add PHP vendors binaries to the PATH
+ENV PATH="/app/vendor/bin:${PATH}"
+
 # Allow use Bower as root
 RUN echo '{ "allow_root": true }' > /root/.bowerrc
 

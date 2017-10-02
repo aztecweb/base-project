@@ -1,6 +1,6 @@
 <?php
 /**
- * HttpHeader class.
+ * HttpHeader class
  *
  * @package Aztec
  */
@@ -21,7 +21,7 @@ class HttpHeader extends Base {
 	 * Execute hooks
 	 */
 	public function init() {
-	    add_filter( 'wp_headers', $this->callback( 'http_headers_x_ua_compatible' ), 10, 2 );
+		add_filter( 'wp_headers', $this->callback( 'http_headers_x_ua_compatible' ), 10, 2 );
 	}
 
 	/**
@@ -33,7 +33,8 @@ class HttpHeader extends Base {
 	 * @return array The list of headers to be sent.
 	 */
 	public function http_headers_x_ua_compatible( $headers, $wp ) {
-		if ( ! empty( $_SERVER['HTTP_USER_AGENT'] ) && $agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) {
+		if ( ! empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			$agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
 			if ( preg_match( '/MSIE/', $agent ) ) {
 				$headers['X-UA-Compatible'] = 'IE=edge,chrome=1';
 			}
