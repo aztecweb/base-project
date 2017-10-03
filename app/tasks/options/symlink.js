@@ -10,7 +10,7 @@ module.exports = {
 		dest: '<%= config.template.build %>'
 	},
 	assets: {
-		src: '<%= config.assets.build %>/<%= config.env.ENV %>',
+		src: '<%= config.assets.build %>',
 		dest: '<%= config.template.src %>/assets'
 	},
 	cli: {

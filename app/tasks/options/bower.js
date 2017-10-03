@@ -3,7 +3,7 @@
  */
 module.exports = {
 	copy : {
-		dest : '<%= config.assets %>/js/libs',
+		dest : '<%= config.assets.build %>/js/libs',
 		options : {
 			keepExpandedHierarchy: false
 		}

@@ -38,7 +38,7 @@ module.exports = function (grunt) {
 				// source of assets
 				src: 'app/assets',
 				// destination of assets to symlink
-				build: '.assets'
+				build: '.assets/<%= config.env.ENV %>'
 			},
 			// template directory
 			template: {

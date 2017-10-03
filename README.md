@@ -20,21 +20,17 @@ Keep this process running. To test if the database was created, open a new termi
 
 If after some seconds, the database could not be connected. Restart the installation process.
 
-### WordPress
+### Dependencies
 
 Download PHP packages, including the WordPress.
 
     $ docker-compose run --rm composer install
 
-Install the WordPress
-
-    $ docker-compose run --rm php bin/install
-
-### Theme
-
 Download Node packages
 
     $ docker-compose run --rm node npm install
+
+### Theme
 
 Download Bower packages
 
@@ -43,6 +39,16 @@ Download Bower packages
 Build the theme
 
     $ docker-compose run --rm node grunt
+
+### WordPress
+
+Create symbolic links with configuration files
+
+    $ docker-compose run --rm node grunt symlink:cli symlink:wp
+
+Install the WordPress
+
+    $ docker-compose run --rm php bin/install
 
 ## Import data
 
