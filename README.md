@@ -53,3 +53,15 @@ By default has two files with the [Theme Unit Test](https://codex.wordpress.org/
 To import the data from a file, execute:
 
     docker-compose run --rm php bin/data [file]
+
+## PHP Code Standards
+
+The project is configured to validate the quality of the PHP code. It is used the [WordPress Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/) as base to code validation.
+
+The validation isn't done by the _watch_ service. Because is a PHP execution and for now isn't wrappered by the _node_ image. Execute this command to run the code sniffer:
+
+    $ docker-compose run --rm php phpcs
+
+And to fix some warnings using the _PHP Code Beautifier and Fixer_, execute:
+
+    $ docker-compose run --rm php phpcbf
