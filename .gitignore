@@ -1,6 +1,7 @@
 # Project files
 /.assets/
 /.ssh/
+/app/template/assets/
 /database/
 /web/
 .salts
