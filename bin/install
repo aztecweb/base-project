@@ -1,6 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Install and configure the website in the public directory
+
+# Read and import dotenv variables to script
+dotenv () {
+  DOTENV_SHELL_LOADER_SAVED_OPTS=$(set +o)
+  set -o allexport
+  [ -f .env ] && source .env
+  set +o allexport
+  eval "$DOTENV_SHELL_LOADER_SAVED_OPTS"
+  unset DOTENV_SHELL_LOADER_SAVED_OPTS
+}
+
 
 # Parse arguments
 # Adapted from Argbash (https://argbash.io/generate) generator
@@ -62,7 +73,7 @@ if [ ! -f .env ]; then
 fi
 
 # Load project environment variables
-source .env
+dotenv
 
 # Remove default WordPress packages 
 rm -rf web/wp-content/themes/twenty*
@@ -79,7 +90,7 @@ fi
 # Install the WordPress if it isn't
 if ! $wp core is-installed 2> /dev/null; then
     $wp db reset --yes 2> /dev/null || $wp db create
-    $wp core install --title=${WP_TITLE} --admin_user=${WP_USER} --admin_password=${WP_PASSWORD} --admin_email=${WP_EMAIL} --skip-email
+    $wp core install --title="${WP_TITLE}" --admin_user=${WP_USER} --admin_password=${WP_PASSWORD} --admin_email=${WP_EMAIL} --skip-email
 fi
 
 # Install extra plugins
