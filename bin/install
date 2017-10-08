@@ -109,7 +109,7 @@ themes=app/themes/*.zip
 if [ $(ls -la ${themes} 2> /dev/null | wc -l) -gt 0 ]; then # verify if has packages inner the directory
     for theme in $themes
     do
-        if [ ! $wp theme is-installed $(basename $theme .zip) ]; then
+        if ! $wp theme is-installed $(basename $theme .zip); then
             $wp theme install $theme
         fi
     done
