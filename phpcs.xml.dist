@@ -20,6 +20,9 @@
     </rule>
 
     <!-- Sniff the template and files -->
-    <file>./app/template/</file>
     <file>./src/</file>
+    <file>./app/template/</file>
+
+    <!-- Non sniff assets files -->
+    <exclude-pattern>assets</exclude-pattern>
 </ruleset>
