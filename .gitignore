@@ -13,5 +13,4 @@ wp-cli.yml
 /composer.phar
 
 # Node
-bower_components/
 node_modules/
