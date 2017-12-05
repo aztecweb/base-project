@@ -38,6 +38,10 @@ Download Node packages
 
     $ docker-compose run --rm node npm install
 
+    $ docker-compose run --rm node node node_modules/jpegtran-bin/lib/install.js
+
+The `jpegtran` installation script must be executed to fix a bug with the JPG images compress task.
+
 ### Theme
 
 Download Bower packages
