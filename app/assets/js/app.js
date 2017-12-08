@@ -1,2 +1,2 @@
 // Module A
-require('./app/example.js');
+import A from './app/example'

@@ -1,14 +1,23 @@
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: './app/assets/main.js',
+  entry: {
+    app: './app/assets/main.js',
+    vendor: ['jquery']
+  },
   output: {
     path: path.resolve(__dirname, '.assets'),
-    filename: 'bundle.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
+      },
       {
         test: /\.(png|jpg|gif)$/,
         use: [
@@ -40,5 +49,13 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('styles.css'),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
+    })
   ]
 };
