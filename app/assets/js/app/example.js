@@ -1,1 +1,1 @@
-console.log('Example module!');
+console.log(jQuery.fn.jquery);

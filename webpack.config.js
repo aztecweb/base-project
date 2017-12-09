@@ -4,8 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: './app/assets/main.js',
-    vendor: ['jquery']
+    app: './app/assets/main.js'
   },
   output: {
     path: path.resolve(__dirname, '.assets'),
@@ -51,11 +50,6 @@ module.exports = {
     new ExtractTextPlugin('styles.css'),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'
-    }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery'
     })
   ]
 };
