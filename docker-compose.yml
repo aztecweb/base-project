@@ -63,3 +63,11 @@ services:
       - "35729:35729"
     volumes:
       - .:/app
+
+  # Watch changes in js and style files
+  webpack:
+    command: npm run dev
+    build:
+      context: ./app/docker/node
+    volumes:
+      - .:/app
