@@ -56,6 +56,10 @@ RUN { \
 # Add vendors binaries to the PATH
 ENV PATH="/app/vendor/bin:${PATH}"
 
+# Override WP-CLI program to open help
+# By default WP-CLI uses 'less -r'. '-r' argument is incompatible on Alpine
+ENV PAGER="less"
+
 COPY entrypoint /usr/local/bin/
 
 WORKDIR /app
