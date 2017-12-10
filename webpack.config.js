@@ -47,15 +47,13 @@ module.exports = {
       }
     ]
   },
+  externals: {
+    jquery: 'jQuery'
+  },
   plugins: [
     new ExtractTextPlugin('styles.css'),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'
-    }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery'
     })
   ]
 };

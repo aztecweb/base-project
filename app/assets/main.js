@@ -1,5 +1,5 @@
-// JS Modules
-require('./js/app.js');
+// App
+import './js/app'
 
 // Styles
-require('./stylus/style.styl');
+import './stylus/style.styl'
