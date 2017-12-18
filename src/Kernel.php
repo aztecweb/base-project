@@ -39,6 +39,7 @@ class Kernel {
 			\Aztec\Setup\DisableEmoji::class,
 			\Aztec\Setup\Head::class,
 			\Aztec\Setup\HttpHeader::class,
+			\Aztec\Setup\Textdomain::class,
 		];
 
 		foreach ( $init_classes as $class ) {
