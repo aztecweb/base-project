@@ -2,17 +2,6 @@
 #
 # Install and configure the website in the public directory
 
-# Read and import dotenv variables to script
-dotenv () {
-  DOTENV_SHELL_LOADER_SAVED_OPTS=$(set +o)
-  set -o allexport
-  [ -f .env ] && source .env
-  set +o allexport
-  eval "$DOTENV_SHELL_LOADER_SAVED_OPTS"
-  unset DOTENV_SHELL_LOADER_SAVED_OPTS
-}
-
-
 # Parse arguments
 # Adapted from Argbash (https://argbash.io/generate) generator
 die()
@@ -65,32 +54,10 @@ parse_commandline "$@"
 # Go to project root
 cd $(dirname "$0")/..
 
-wp='vendor/bin/wp --allow-root'
-
-if [ ! -f .env ]; then
-    echo 'Dotenv file not found'
-    exit 1
-fi
-
-# Load project environment variables
-dotenv
-
-# Remove default WordPress packages 
-rm -rf web/wp-content/themes/twenty*
-rm -rf web/wp-content/plugins/hello.php
-rm -rf web/wp-content/plugins/akismet
-rm -rf web/wp-content/languages/plugins
-rm -rf web/wp-content/languages/themes
-
-# Generate env salts file
-if [ ! -f .salts ]; then
-    $wp dotenv salts generate --file='.salts'
-fi
-
 # Install the WordPress if it isn't
-if ! $wp core is-installed 2> /dev/null; then
-    $wp db reset --yes 2> /dev/null || $wp db create
-    $wp core install --title="${WP_TITLE}" --admin_user=${WP_USER} --admin_password=${WP_PASSWORD} --admin_email=${WP_EMAIL} --skip-email
+if ! wp core is-installed 2> /dev/null; then
+    wp db reset --yes 2> /dev/null || wp db create
+    wp core install --title="${WP_TITLE}" --admin_user=${WP_USER} --admin_password=${WP_PASSWORD} --admin_email=${WP_EMAIL} --skip-email
 fi
 
 # Install extra plugins
@@ -98,8 +65,8 @@ plugins=app/plugins/*.zip
 if [ $(ls -la ${plugins} 2> /dev/null | wc -l) -gt 0 ]; then # verify if has packages inner the directory
     for plugin in $plugins
     do
-        if ! $wp plugin is-installed $(basename $plugin .zip); then
-            $wp plugin install $plugin
+        if ! wp plugin is-installed $(basename $plugin .zip); then
+            wp plugin install $plugin
         fi
     done
 fi
@@ -109,14 +76,14 @@ themes=app/themes/*.zip
 if [ $(ls -la ${themes} 2> /dev/null | wc -l) -gt 0 ]; then # verify if has packages inner the directory
     for theme in $themes
     do
-        if ! $wp theme is-installed $(basename $theme .zip); then
-            $wp theme install $theme
+        if ! wp theme is-installed $(basename $theme .zip); then
+            wp theme install $theme
         fi
     done
 fi
 
 # Activate all plugins
-$wp plugin activate --all
+wp plugin activate --all
 
 # Import data if the command has flag 'with-data'
 if [ ! -z "${_arg_with_data+x}" ]; then
@@ -124,13 +91,13 @@ if [ ! -z "${_arg_with_data+x}" ]; then
     if [ $(ls -la ${datafiles} 2> /dev/null | wc -l) -gt 0 ]; then # verify if has files inner the directory
         for data in $datafiles
         do
-            $wp wxr-importer import ${data}
+            wp wxr-importer import ${data}
         done
     fi
 fi
 
 # Update language of core, theme and plugins
-$wp core language update
+wp core language update
 
 # Activate theme
-$wp theme activate ${THEME}
+wp theme activate base-project

@@ -1,16 +1,15 @@
-# Development project infrastructure generated over the Docker. For see how up
-# the infrastructure read the README file.
-
-version: "2"
+# Development project infrastructure generated over the Docker
+version: "3"
 
 services:
-  # PHP 7.1 with project required extensions.
-  php:
+  wp:
     build:
-      context: ./app/docker/php
+      context: ./app/docker/wp-dev
     volumes:
       - .:/app
-      - ./.ssh:/root/.ssh
+    env_file:
+       - ./app/env/wp.env
+       - ./app/env/app.env
     depends_on:
       - db
 
@@ -20,37 +19,41 @@ services:
     volumes:
       - .:/app
       # Map local user Composer directory with container for cache packages
-      - ~/.docker_cache/composer:/root/composer
+      - ~/.cache/composer:/tmp/cache
 
   # Database image to run the mysql
   db:
     image: mariadb:10.3
     ports:
-        - "3306:3306"
+      - "3306:3306"
     volumes:
        - ./database:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: project
-      MYSQL_USER: project
-      MYSQL_PASSWORD: project
+       - ./app/initdb:/docker-entrypoint-initdb.d
+    env_file:
+       - ./app/env/mysql.env
 
   # Run the applicatiion over HTTP on localhost:8080
   server:
     command: wp server --host=0.0.0.0
     build:
-      context: ./app/docker/php
+      context: ./app/docker/wp-dev
     ports:
       - "8080:8080"
     volumes:
       - .:/app
+    env_file:
+       - ./app/env/wp.env
+       - ./app/env/xdebug.env
     depends_on:
       - db
+      - smtp
 
   # Node 8.2 with Grunt and Bower
   node:
     build:
       context: ./app/docker/node
+    env_file:
+       - ./app/env/app.env
     volumes:
       - .:/app
 
@@ -64,10 +67,21 @@ services:
     volumes:
       - .:/app
 
-  # Watch changes in js and style files
-  webpack:
-    command: npm run dev
+  # Test SMTP server
+  smtp:
+    image: schickling/mailcatcher
+    restart: always
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+    environment:
+      MAILCATCHER_PORT: 1025
+
+  # Run bash scripts
+  bash:
     build:
-      context: ./app/docker/node
+      context: ./app/docker/bash
     volumes:
       - .:/app
+    env_file:
+       - ./app/env/app.env

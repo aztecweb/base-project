@@ -1,0 +1,126 @@
+#!/bin/sh
+
+# Build the project for distribution and the Docker images
+
+# Define the path of directories
+projectRoot=$( cd "$(dirname "$0")" ; cd .. ; pwd -P )
+buildDir=${projectRoot}/build
+registryRepository=asaas
+
+# Deploy settings
+cluster=asaas
+region=us-east-1
+instanceType=t2.nano
+
+# Go to project root
+cd ${projectRoot}
+
+# Load build env variables
+. ./app/env/build.env
+
+set -ex
+
+# Make sure that build directory is empty
+rm -rf ${buildDir}
+mkdir -p ${buildDir}
+
+# local source code build
+## Copy code to build directory
+cp -R \
+        app \
+        src \
+        composer.* \
+        Gruntfile.js \
+        package.json \
+        yarn.lock \
+        ${buildDir}/
+
+## Copy project docker-compose.build.yml and rename to docker-compose.yml
+cp docker-compose.build.yml build/docker-compose.yml
+
+# Build process
+## Go to build directory
+cd build
+
+## Update Docker images
+docker-compose pull && docker-compose build
+
+## Install PHP and Node packages
+docker-compose run --rm composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
+docker-compose run --rm node yarn link --verbose gifsicle jpegtran-bin optipng-bin
+docker-compose run --rm node yarn install --verbose
+
+## Run the build
+docker-compose run --rm node grunt dist --verbose
+
+# Cleanup unnecessary application file
+rm -rf \
+        app \
+        docker-compose.yml \
+        node_modules \
+        src \
+        composer.* \
+        Gruntfile.js \
+        package.json \
+        yarn.lock
+
+# Create the dist package dist/dist.tar.gz
+tar -zcf dist.tar.gz *
+
+# Remove the build directory
+cd ${projectRoot}
+
+# Build Docker images
+docker build -t asaas:nginx -f app/docker/nginx/Dockerfile .
+docker build -t asaas:wp-fpm -f app/docker/wp-fpm/Dockerfile .
+
+# Register images
+aws="docker run --rm -it -v ${HOME}/.aws:/root/.aws -v ${projectRoot}:/apps -w /apps xueshanf/awscli aws"
+endpoint=$(${aws} ecr get-authorization-token --output text --query 'authorizationData[].proxyEndpoint' | tr -d '\r' | sed 's/https:\/\///')
+
+## Login with AWS
+$(${aws} ecr get-login --no-include-email | tr -d '\r')
+
+## Verify if repository exits, otherwise create it
+repository=$( \
+        ${aws} ecr describe-repositories \
+            --query 'repositories[?repositoryName==`'"$registryRepository"'`].repositoryName' \
+            --output text  \
+        | tr -d '\r'
+    )
+if [ '' = ${repository} ]; then
+    ${aws} ecr create-repository --repository-name ${registryRepository}
+fi
+
+## Push images
+docker tag asaas:nginx ${endpoint}/asaas:nginx
+docker push ${endpoint}/asaas:nginx
+
+docker tag asaas:wp-fpm ${endpoint}/asaas:wp-fpm
+docker push ${endpoint}/asaas:wp-fpm
+
+# Create temporary ECS configuration file to use as volume
+mkdir -p ${projectRoot}/.ecs
+touch ${projectRoot}/.ecs/config
+
+ecs="docker run -it \
+        -v ${HOME}/.aws:/root/.aws \
+        -v ${HOME}/.ecs/credentials:/root/.ecs/credentials \
+        -v ${projectRoot}/.ecs/config:/root/.ecs/config \
+        -v ${projectRoot}:/data -w /data \
+        aztecweb/ecs-cli"
+
+# Configure the cluster
+${ecs} configure --cluster ${cluster} --region ${region} --default-launch-type EC2 --config-name ${cluster}
+
+# Create cluster if not exists
+clusterStatus=$(${aws} ecs describe-clusters --cluster ${cluster} --query 'clusters[0].status' | tr -d '\r' | sed 's/"//g')
+if [ 'ACTIVE' != ${clusterStatus} ]; then
+    ${ecs} up --keypair aztec-main-key --capability-iam --instance-type t2.nano
+fi
+
+# Up the service
+${ecs} compose --file docker-compose.prod.yml service up server --create-log-groups
+
+# Remove build dir
+rm -rf ${buildDir}

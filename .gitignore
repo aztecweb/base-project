@@ -1,16 +1,15 @@
 # Project files
 /.assets/
-/.ssh/
-/app/template/assets
+/.ecs/
+/build/
 /database/
+/dist.tar.gz
 /web/
-.salts
-deploy.log
-wp-cli.yml
+/wp-cli.yml
+/app/env/salts.env
 
 # Composer
 /vendor/
-/composer.phar
 
 # Node
-node_modules/
+/node_modules/

@@ -1,0 +1,69 @@
+#!/bin/sh
+
+# Temporary build solution to deploy in any server
+
+# Define the path of directories
+projectRoot=$( cd "$(dirname "$0")" ; cd .. ; pwd -P )
+buildDir=${projectRoot}/build
+
+# Go to project root
+cd ${projectRoot}
+
+# Load build env variables
+. ./app/env/build.env
+
+set -ex
+
+# Make sure that build directory is empty
+rm -rf ${buildDir}
+mkdir -p ${buildDir}
+
+# local source code build
+## Copy code to build directory
+cp -R \
+        app \
+        src \
+        composer.* \
+        Gruntfile.js \
+        package.json \
+        yarn.lock \
+        ${buildDir}/
+
+## Copy project docker-compose.build.yml and rename to docker-compose.yml
+cp docker-compose.build.yml build/docker-compose.yml
+
+# Build process
+## Go to build directory
+cd ${buildDir}
+
+# Unlink the development environment links
+unlink src/assets
+
+## Update Docker images
+docker-compose pull && docker-compose build
+
+## Install PHP and Node packages
+docker-compose run --rm composer install --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader
+docker-compose run --rm node yarn link --verbose gifsicle jpegtran-bin optipng-bin
+docker-compose run --rm node yarn install --verbose
+
+## Run the build
+docker-compose run --rm node grunt dist --verbose
+
+# Cleanup unnecessary application file
+rm -rf \
+        app \
+        docker-compose.yml \
+        node_modules \
+        src \
+        composer.* \
+        Gruntfile.js \
+        package.json \
+        yarn.lock \
+        web/wp-config.php
+
+# Create the dist package dist/dist.tar.gz
+tar -zcf dist.tar.gz *
+
+# Remove build dir
+rm -rf ${buildDir}
