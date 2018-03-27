@@ -10,6 +10,7 @@
   "license": "GPL-2.0",
   "scripts": {
     "dev": "webpack --watch",
+    "stylus:lint": "stylint ./app/assets/stylus/style.styl",
     "build": "webpack --optimize-minimize",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,14 +24,18 @@
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
+    "jshint": "^2.9.5",
+    "jshint-loader": "^0.8.4",
     "style-loader": "^0.19.0",
+    "stylint": "^1.5.9",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
+    "stylus-loader": "^3.0.2",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0"
   },
   "dependencies": {
     "jquery": "^1.12.4",
-    "nib": "^1.1.2"
+    "nib": "^1.1.2",
+    "stylint-loader": "^1.0.0"
   }
 }

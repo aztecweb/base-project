@@ -1,5 +1,5 @@
 // App
-import './js/app'
+import './js/app';
 
 // Styles
-import './stylus/style.styl'
+import './stylus/style.styl';
