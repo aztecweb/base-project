@@ -1,6 +1,7 @@
 # Project Node.js image
 FROM node:8-alpine
 
+# @todo: Fail to install pngquant with Alpine, works with Ubuntu: https://github.com/imagemin/pngquant-bin/issues/78
 RUN set -ex; \
         # Image build dependencies
         apk add --update --no-cache --virtual .build-deps \
@@ -37,9 +38,6 @@ RUN set -ex; \
         \
         # Remove build dependencies
         apk del .build-deps
-
-# Install Grunt CLI
-RUN yarn global add grunt-cli
 
 # Define working directory
 WORKDIR /app
