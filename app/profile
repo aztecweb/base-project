@@ -39,8 +39,8 @@ alias dbroot="${compose} exec db mysql -u root -proot"
 ## Up server
 alias server="${compose} up server watch"
 
-## Grunt
-alias grunt="${compose} run --rm node grunt"
+## Yarn
+alias yarn="${compose} run --rm yarn run dev"
 
 ## Composer
 alias composer="${compose} run --rm composer"

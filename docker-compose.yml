@@ -48,7 +48,7 @@ services:
       - db
       - smtp
 
-  # Node 8.2 with Grunt and Bower
+  # Node 8.2 with NPM/Yarn
   node:
     build:
       context: ./app/docker/node

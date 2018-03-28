@@ -10,8 +10,8 @@
   "license": "GPL-2.0",
   "scripts": {
     "dev": "webpack --watch",
-    "stylus:lint": "stylint ./app/assets/stylus/style.styl",
     "build": "webpack --optimize-minimize",
+    "lint:stylus": "stylint ./app/assets/stylus/style.styl",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

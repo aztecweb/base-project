@@ -37,14 +37,20 @@ Link imagemin dependencies installed globally and install another dependencies.
     $ docker-compose run --rm node yarn link gifsicle jpegtran-bin optipng-bin
     $ docker-compose run --rm node yarn install
 
-## Development Build
+## Build
 
-Build the plugin to development using Grunt.
+Build assets for production mode.
 
-    $ docker-compose run --rm node grunt
+    $ docker-compose run --rm node yarn run build
 
 ## WordPress
 
 Install the WordPress
 
     $ docker-compose run --rm wp bin/install
+
+## Symlinks
+
+Create required symlinks
+
+    $ docker-compose run --rm wp bin/symlink

@@ -11,6 +11,6 @@
 # Composer
 /vendor/
 
-# Node
+# Node & Yarn
 /node_modules/
 .yarn-error.log
