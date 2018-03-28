@@ -59,7 +59,7 @@ services:
 
   # Watch changes in the project and update the files local server
   watch:
-    command: grunt watch
+    command: yarn run dev
     build:
       context: ./app/docker/node
     ports:

@@ -12,7 +12,7 @@ use Aztec\Base;
 /**
  * Disable default WordPress emoji support
  */
-class DisableEmoji extends Base {
+class Disable_Emoji extends Base {
 
 	/**
 	 * Execute hooks

@@ -15,7 +15,7 @@ use Aztec\Base;
  * Some WordPress native tags are disabled, like feeds, services and post
  * related links.
  */
-class HttpHeader extends Base {
+class Http_Header extends Base {
 
 	/**
 	 * Execute hooks

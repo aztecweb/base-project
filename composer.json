@@ -18,11 +18,9 @@
         "deployer/recipes": "^6.0"
 	},
 	"autoload" : {
-		"psr-4" : {
-			"Aztec\\" : "src/"
-		},
 		"files" : [
-			"src/WP_CLI/bootstrap.php"
+			"src/autoload.php",
+			"src/includes/wp-cli/bootstrap.php"
 		]
 	},
 	"extra" : {
