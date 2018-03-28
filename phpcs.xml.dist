@@ -17,5 +17,5 @@
     </rule>
 
     <!-- Sniff the theme files -->
-    <file>./src/</file>
+    <file>./src/includes</file>
 </ruleset>
