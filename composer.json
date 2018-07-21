@@ -8,7 +8,6 @@
 	"require" : {
 		"vlucas/phpdotenv" : "^2.4",
 		"php-di/php-di" : "^5.4",
-		"aaemnnosttv/wp-cli-dotenv-command" : "^1.0",
 		"johnpbloch/wordpress" : "^4.8",
 		"wp-cli/wp-cli": "^1.3",
 		"wp-coding-standards/wpcs": "^0.13.1"
@@ -18,11 +17,9 @@
         "deployer/recipes": "^6.0"
 	},
 	"autoload" : {
-		"psr-4" : {
-			"Aztec\\" : "src/"
-		},
 		"files" : [
-			"src/WP_CLI/bootstrap.php"
+			"src/autoload.php",
+			"src/includes/wp-cli/bootstrap.php"
 		]
 	},
 	"extra" : {

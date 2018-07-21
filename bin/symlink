@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# @todo: Find a way to set a base path to ln command.
+
+# Go to project root
+cd $(dirname "$0")/..
+
+# Create wp_config.php file symlink.
+ln -sf ../app/config/wp-config/${ENV}.php web/wp-config.php
+
+# Create wp_cli.yml file symlink.
+ln -sf app/config/wp-cli/${ENV}.yml wp-cli.yml
+
+# Create theme symlink.
+ln -sf ../../../src/template web/wp-content/themes/${THEME}
+
+# Create assets symlink.
+ln -sf ../../.assets web/wp-content/themes/${THEME}/assets

@@ -36,10 +36,14 @@ class Kernel {
 	public function init() {
 		$init_classes = [
 			\Aztec\Setup\Assets::class,
-			\Aztec\Setup\DisableEmoji::class,
+			\Aztec\Setup\Disable_Emoji::class,
 			\Aztec\Setup\Head::class,
+<<<<<<< HEAD:src/Kernel.php
 			\Aztec\Setup\HttpHeader::class,
 			\Aztec\Setup\Textdomain::class,
+=======
+			\Aztec\Setup\Http_Header::class,
+>>>>>>> gitlab/webpack:src/includes/class-kernel.php
 		];
 
 		foreach ( $init_classes as $class ) {

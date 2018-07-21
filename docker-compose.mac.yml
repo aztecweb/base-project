@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  wp:
+    volumes:
+      - .:/app:cached
+
+  server:
+    volumes:
+      - .:/app:cached
+
+  db:
+    volumes:
+       - ./database:/var/lib/mysql:cached
+
+  node:
+    volumes:
+      - .:/app:cached
+
+  watch:
+    volumes:
+      - .:/app:cached
+
+  bash:
+    volumes:
+      - .:/app:cached

@@ -1,0 +1,51 @@
+# AWS
+## aws-cli
+alias aws="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/apps -w /apps xueshanf/awscli aws"
+
+## ecs-cli
+function ecs() {
+	docker run -it \
+        -v ~/.aws:/root/.aws \
+        -v ${HOME}/.ecs/credentials:/root/.ecs/credentials \
+        -v ${HOME}/Downloads/aws-aztec-main-key.pem:/root/.aws/aws-aztec-main-key.pem \
+        -v $(pwd)/.ecs/config:/root/.ecs/config \
+        -v $(pwd):/data -w /data \
+        aztecweb/ecs-cli "$@"
+}
+
+# Docker
+## Kill and remove all existing Docker containers
+function kill() {
+	docker kill $(docker ps -qa) 2> /dev/null || docker rm $(docker ps -qa) 2> /dev/null
+}
+
+# Docker Compose services
+
+compose="docker-compose -f docker-compose.yml"
+os=$(uname -s)
+if [ 'Darwin' == $os ]; then
+	compose="${compose} -f docker-compose.mac.yml"
+fi
+
+## WP-CLI
+alias wp="${compose} run --rm wp"
+
+## Database - project
+alias db="${compose} exec db mysql -u project -pproject project"
+
+## Database - root
+alias dbroot="${compose} exec db mysql -u root -proot"
+
+## Up server
+alias server="${compose} up server watch"
+
+## Yarn
+alias yarn="${compose} run --rm node yarn"
+
+## Composer
+alias composer="${compose} run --rm composer"
+
+## PHP Code Sniffer
+# @todo: On Linux this command generate the follow error: "Filesystem writes are forbidden, you should not be using touch()"
+alias phpcs="wp phpcs"
+alias phpcbf="wp phpcbf"
