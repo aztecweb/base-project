@@ -15,8 +15,7 @@
 	},
 	"require-dev" : {
         "deployer/deployer": "^6.0",
-        "deployer/recipes": "^6.0",
-		"roborourke/wp-l10n-gen" : "dev-master"
+        "deployer/recipes": "^6.0"
 	},
 	"autoload" : {
 		"psr-4" : {
